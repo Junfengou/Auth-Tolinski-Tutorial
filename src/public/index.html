@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Login</h1>
+
+    <h3>Register form</h3>
+    <form id="register-form">
+        <input type="email" name="email">
+
+        <input type="password" name="password">
+
+        <button type="submit">Register</button>
+    </form>
+
+    <hr />
+    <hr />
+    <hr />
+
+    <h3>Login form</h3>
+    <form id="login-form">
+        <input type="email" name="email">
+
+        <input type="password" name="password">
+
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        // IIFE
+        (() => {
+            const registerForm = document.getElementById("register-form");
+
+            registerForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                // console.log("submitted");
+                // comes back in an array of values
+
+                try {
+                    const values = Object.values(registerForm).reduce((acc, field) => {
+                    // account for button type entered as empty string in the object
+                    if(field.name) {
+                        acc[field.name] = field.value;
+                    }          
+                    return acc;
+                }, {}); 
+
+                    // POST request send request to the backend
+                    const res = await fetch('/api/register', {
+                        method: "POST",
+                        body: JSON.stringify(values), // passing the information you want to send back to the backend
+                        headers: { "Content-type": "application/json; charset=UTF-8 " }, // optional but not really lol
+                    })
+                    console.log(values);
+                }
+
+                catch(e) {
+                    console.error(e);
+                }
+               
+            })
+
+            //--------------------------------------------------------------->
+
+            const loginForm = document.getElementById("login-form");
+
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                // console.log("submitted");
+                // comes back in an array of values
+
+                try {
+                    // accumulate incoming data into an object using reduce and send it to the backend
+                    const values = Object.values(loginForm).reduce((acc, field) => {
+                    // account for button type entered as empty string in the object
+                    if(field.name) {
+                        acc[field.name] = field.value;
+                    }          
+                    return acc;
+                }, {}); 
+
+                    // POST request send request to the backend
+                    const res = await fetch('/api/authorize', {
+                        method: "POST",
+                        body: JSON.stringify(values), // passing the information you want to send back to the backend
+                        headers: { "Content-type": "application/json; charset=UTF-8 " }, // optional but not really lol
+                    })
+                    console.log(values);
+                }
+
+                catch(e) {
+                    console.error(e);
+                }
+               
+            })
+        })()
+        
+
+    </script>
+
+</body>
+</html>
