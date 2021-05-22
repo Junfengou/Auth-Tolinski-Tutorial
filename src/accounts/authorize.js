@@ -23,5 +23,5 @@ export async function authorizeUser(email, password) {
 	console.log(isAuthorized);
 
 	// Password correct ? return true : return false
-	return isAuthorized;
+	return { isAuthorized, userId: userData._id }; // return multiple items in a single return
 }

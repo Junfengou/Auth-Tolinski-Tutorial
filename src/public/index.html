@@ -19,8 +19,7 @@
     </form>
 
     <hr />
-    <hr />
-    <hr />
+  
 
     <h3>Login form</h3>
     <form id="login-form">
@@ -31,7 +30,24 @@
         <button type="submit">Login</button>
     </form>
 
+    <hr />
+  
+
+    <button onclick="logout()">Logout</button>
+
     <script>
+
+        async function logout() {
+            try {
+                const res = await fetch('/api/logout', {
+                    method: "POST",
+                })
+            }
+            catch(e) {
+                console.error(e);
+            }
+        }
+
         // IIFE
         (() => {
             const registerForm = document.getElementById("register-form");
